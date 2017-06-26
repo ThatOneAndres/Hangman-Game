@@ -43,7 +43,6 @@ function hangman(words){
 		if (!this.allGuesses.includes(guess)){
 			if (this.chosenName.includes(guess)){
 				while (this.findI(guess) != -1){
-					console.log("guessindex: " + this.findI(guess));
 					this.shownName[this.findI(guess)] = guess;
 					this.allGuesses.push(guess);
 					this.chosenName[this.findI(guess)] = null;
