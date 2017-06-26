@@ -18,20 +18,21 @@ body{
 	font-family: 'Bowlby One', cursive;
 	font-size: 28px;
 }
-.image-loc{
+#image-loc{
 	border-width: 5px;
 	border-bottom-style: dotted;
 	border-top-style: dotted;
 	border-left-style: dotted;
 	border-right-style: dashed;
-	height: 500px;
+	height: 550px;
 }
-.hangman-loc{
+#hangman-loc{
 	border-width: 5px;
 	border-bottom-style: dotted;
 	border-top-style: dotted;
 	border-right-style: dotted;
-	height: 500px;
+	border-left-style: dashed;
+	height: 550px;
 }
 .hangman-text{
 	font-family: 'Bowlby One', cursive;

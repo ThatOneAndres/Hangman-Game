@@ -1,6 +1,6 @@
 function hangman(words){
 	for (var i = 0; i < words.length; i ++){
-		words[i] = words[i].toLowerCase();
+		words[i] = words[i].toUpperCase();
 	}
 	this.arrayOfWords = words;
 	this.allGuesses = [];
@@ -34,13 +34,9 @@ function hangman(words){
 					console.log("guessindex: " + this.findI(guess));
 					this.shownName[this.findI(guess)] = guess;
 					this.allGuesses.push(guess);
-					// this.chosenName.splice(this.findI(guess),1);
 					this.chosenName[this.findI(guess)] = null;
 					this.correctLeft--;
-					console.log(this.shownName);
-					console.log(this.chosenName);
-					console.log(this.correctLeft);
-					// console.log(this.chosenName);
+
 				}
 			}
 			else{
@@ -60,6 +56,8 @@ function hangman(words){
 			word_text += rhangman.shownName[i];
 			word_text += " ";
 	}
+	var correct_letters = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","$","-","@","#","!"];
+	
 	document.onload = function(){
 		console.log(word_text);
 		document.getElementById("line").innerHTML = word_text;
@@ -71,12 +69,14 @@ function hangman(words){
 	document.onkeyup = function(event){
 		var guessed = "";
 		var userGuess = event.key;
-		userGuess = userGuess.toLowerCase();
+		userGuess = userGuess.toUpperCase();
 		if (rhangman.attemptsLeft === 0 && rhangman.correctLeft !== 0){
 			// insert message saying game is over.
 		return;
 		}
-		rhangman.chooseLetter(userGuess);
+		if (correct_letters.includes(userGuess)){
+			rhangman.chooseLetter(userGuess);
+		}
 		word_text = "";
 		for (var i = 0; i < rhangman.shownName.length; i++){
 			word_text += rhangman.shownName[i];
