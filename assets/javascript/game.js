@@ -1,24 +1,36 @@
 function hangman(words){
+	// Makes every name in object array uppercase
 	for (var i = 0; i < words.length; i ++){
-		words[i] = words[i].toUpperCase();
+		words[i].name = words[i].name.toUpperCase();
 	}
 	this.arrayOfWords = words;
+	// Correct and Wrong Guesses
 	this.allGuesses = [];
+	// Wrong guesses
 	this.shownGuesses = [];
-	// this.wins = 0;
+	// Random Index to choose name
 	this.nameIndex = Math.floor(Math.random() * this.arrayOfWords.length);
-	this.chosenName = Array.from(this.arrayOfWords[this.nameIndex]);
+	// Chosen object including name, image path, song
+	this.chosenObject = this.arrayOfWords[this.nameIndex];
+	// Array of characters of name
+	this.chosenName = Array.from(this.chosenObject.name)
+	// Correct letters left to get correct
 	this.correctLeft = this.chosenName.length;
+	// Attempts the player has left
+	this.attemptsLeft = this.chosenName.length + 5;
+	// Array of name that will be dsiplayed to show progress of player
 	this.shownName = Array(this.chosenName.length);
 	for (var i = 0; i < this.chosenName.length; i++){
 		if (this.chosenName[i] === " "){
-			this.shownName[i] =  " ";
+			this.correctLeft--;
+			this.attemptsLeft--;
+			this.shownName[i] =  "&nbsp;";
 		}else{
 			this.shownName[i] = "_";
 		}
 	}
-	console.log(this.chosenName);
-	this.attemptsLeft = this.chosenName.length + 5;
+
+
 	this.findI = function(word){
 		for (var i = 0; i < this.chosenName.length; i++){
 			if (word === this.chosenName[i]){
@@ -47,9 +59,33 @@ function hangman(words){
 		}
 	}
 }
-	var rappers = ["Eminem", "Pharrel", "Drake", "Nas", "Migos", "Future"];
+	function rapper(name, img, songpath, songname){
+		this.name = name;
+		this.image = img;
+		this.songpath = songpath;
+		this.songname = songname;
+	}
+	// Rapper objects with name, imagepath, song path and song name
+	var em = new rapper("Eminem", "assets/images/Eminem.jpg","assets/audio/Eminem.mp3","The Real Slim Shady");
+	var pharrell = new rapper("Pharrell", "assets/images/Pharrell.jpg","assets/audio/Pharrell.mp3", "Happy");
+	var drake = new rapper("Drake", "assets/images/Drake.jpg","assets/audio/Drake.mp3", "Started From The Bottom");
+	var nas = new rapper("Nas", "assets/images/Nas.jpg","assets/audio/Nas.mp3","Nas Is Like");
+	var migos = new rapper("Migos", "assets/images/Migos.jpg","assets/audio/Migos.mp3","Bad and Boujee");
+	var future = new rapper("Future", "assets/images/Future.jpg","assets/audio/Future.mp3", "Mask Off");
+	var snoop = new rapper("Snoop Dogg", "assets/images/SnoopDogg.jpg","assets/audio/SnoopDogg.mp3","Drop It Like It's Hot")
+	var kanye = new rapper("Kanye West","assets/images/Kanye.jpg","assets/audio/KanyeWest.mp3","Can't Tell Me Nothing");
+	var kendrick = new rapper("Kendrick Lamar","assets/images/Kendrick.jpg","assets/audio/KendrickLamar.mp3","Humble");
+	var jay = new rapper("Jay Z","assets/images/JayZ.jpg","assets/audio/JayZ.mp3","Dirt Off Your Shoulder");
+	var joey = new rapper("Joey Bada$$","assets/images/Joey.jpg","assets/audio/JoeyBada$$.mp3","Land of the Free");
+	var tech = new rapper("Tech N9ne","assets/images/TechN9ne.jpg","assets/audio/TechN9ne.mp3","Dysfunctional");
+	var chainz = new rapper("2 Chainz","assets/images/2Chainz.jpg","assets/audio/2Chainz.mp3","I'm Different");
+	var cole = new rapper("J Cole","assets/images/JCole.jpg","assets/audio/JCole.mp3","No Role Modelz");
+
+	
+	var rappers = [em, pharrell, drake, nas, migos, future, snoop,kanye,kendrick,jay,joey,tech,chainz,cole];
 	var rhangman = new hangman(rappers);
 	var nrappers;
+
 	var word_text = "";
 	var wins = 0;
 	for (var i = 0; i < rhangman.shownName.length; i++){
@@ -64,15 +100,21 @@ function hangman(words){
 	}
 
 
-
-
 	document.onkeyup = function(event){
 		var guessed = "";
 		var userGuess = event.key;
+
+		//If player loses
 		userGuess = userGuess.toUpperCase();
 		if (rhangman.attemptsLeft === 0 && rhangman.correctLeft !== 0){
-			// insert message saying game is over.
-		return;
+			nrappers = rhangman.arrayOfWords;
+			rhangman = new hangman(nrappers);
+			word_text = "";
+			for (var i = 0; i < rhangman.shownName.length; i++){
+				word_text += rhangman.shownName[i];
+				word_text += " ";
+			}
+			document.getElementById("line").innerHTML = word_text;
 		}
 		if (correct_letters.includes(userGuess)){
 			rhangman.chooseLetter(userGuess);
@@ -84,10 +126,18 @@ function hangman(words){
 		}
 		document.getElementById("line").innerHTML = word_text;
 
+		// If player wins, will update HTML, play audio and start new game
 		if (rhangman.correctLeft === 0){
-			//insert image, play audio
 			wins++;
+			if (typeof audio !== "undefined"){
+				audio.pause();
+			}
+			var audio = new Audio(rhangman.chosenObject.songpath);
+			audio.play();
 			document.getElementById("wins").innerHTML = wins;
+			document.getElementById("image").src = rhangman.chosenObject.image;
+			document.getElementById("song-name").innerHTML = rhangman.chosenObject.songname + " by " + rhangman.chosenObject.name;
+			setTimeout(function(){audio.pause();}, 60000);
 			rhangman.arrayOfWords.splice(this.nameIndex,1);
 			nrappers = rhangman.arrayOfWords;
 			rhangman = new hangman(nrappers);
@@ -98,6 +148,8 @@ function hangman(words){
 			}
 			document.getElementById("line").innerHTML = word_text;
 		}
+
+
 		document.getElementById("remaining").innerHTML = rhangman.attemptsLeft;
 
 		for (var i = 0; i < rhangman.shownGuesses.length; i++){

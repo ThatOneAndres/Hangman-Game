@@ -18,25 +18,29 @@ body{
 	font-family: 'Bowlby One', cursive;
 	font-size: 28px;
 }
-#image-loc{
+#center{
 	border-width: 5px;
-	border-bottom-style: dotted;
-	border-top-style: dotted;
-	border-left-style: dotted;
-	border-right-style: dashed;
-	height: 550px;
+	border-style: dotted;
+	overflow: auto;
 }
 #hangman-loc{
 	border-width: 5px;
-	border-bottom-style: dotted;
-	border-top-style: dotted;
-	border-right-style: dotted;
 	border-left-style: dashed;
-	height: 550px;
 }
 .hangman-text{
 	font-family: 'Bowlby One', cursive;
 	font-size: 20px;
 	text-align: center;
 	padding: 10px;
+}
+#image{
+	height: 350px;
+	width: 325px;
+	margin-top: 10px;
+}
+@media only screen and (max-width: 991px) {
+	#hangman-loc{
+	border-left-style: none;
+	border-top-style: dashed;
+	}
 }
