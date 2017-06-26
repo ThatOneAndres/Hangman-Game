@@ -1,0 +1,41 @@
+html{
+	height: 100%;
+}
+body{
+	height: 100%;
+	background-color: black;
+	color: #fff;
+	margin: 0;
+}
+#main-header{
+	font-size: 65px;
+	height:55px;
+}
+#sub-header{
+	font-size: 40px;
+}
+#song-name{
+	font-family: 'Bowlby One', cursive;
+	font-size: 28px;
+}
+.image-loc{
+	border-width: 5px;
+	border-bottom-style: dotted;
+	border-top-style: dotted;
+	border-left-style: dotted;
+	border-right-style: dashed;
+	height: 500px;
+}
+.hangman-loc{
+	border-width: 5px;
+	border-bottom-style: dotted;
+	border-top-style: dotted;
+	border-right-style: dotted;
+	height: 500px;
+}
+.hangman-text{
+	font-family: 'Bowlby One', cursive;
+	font-size: 20px;
+	text-align: center;
+	padding: 10px;
+}
