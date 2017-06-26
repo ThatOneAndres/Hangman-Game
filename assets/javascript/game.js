@@ -136,7 +136,7 @@ function hangman(words){
 			document.getElementById("wins").innerHTML = wins;
 			document.getElementById("image").src = rhangman.chosenObject.image;
 			document.getElementById("song-name").innerHTML = rhangman.chosenObject.songname + " by " + rhangman.chosenObject.name;
-			setTimeout(function(){audio.pause();}, 60000);
+			setTimeout(function(){audio.pause();}, 30000);
 			rhangman.arrayOfWords.splice(this.nameIndex,1);
 			nrappers = rhangman.arrayOfWords;
 			rhangman = new hangman(nrappers);
