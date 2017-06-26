@@ -5,9 +5,10 @@ function hangman(words){
 	this.arrayOfWords = words;
 	this.allGuesses = [];
 	this.shownGuesses = [];
-	this.wins = 0;
+	// this.wins = 0;
 	this.nameIndex = Math.floor(Math.random() * this.arrayOfWords.length);
 	this.chosenName = Array.from(this.arrayOfWords[this.nameIndex]);
+	this.correctLeft = this.chosenName.length;
 	this.shownName = Array(this.chosenName.length);
 	for (var i = 0; i < this.chosenName.length; i++){
 		if (this.chosenName[i] === " "){
@@ -32,10 +33,13 @@ function hangman(words){
 				while (this.findI(guess) != -1){
 					console.log("guessindex: " + this.findI(guess));
 					this.shownName[this.findI(guess)] = guess;
+					this.allGuesses.push(guess);
+					// this.chosenName.splice(this.findI(guess),1);
+					this.chosenName[this.findI(guess)] = null;
+					this.correctLeft--;
 					console.log(this.shownName);
 					console.log(this.chosenName);
-					this.allGuesses.push(guess);
-					this.chosenName.splice(this.findI(guess),1);
+					console.log(this.correctLeft);
 					// console.log(this.chosenName);
 				}
 			}
@@ -51,6 +55,7 @@ function hangman(words){
 	var rhangman = new hangman(rappers);
 	var nrappers;
 	var word_text = "";
+	var wins = 0;
 	for (var i = 0; i < rhangman.shownName.length; i++){
 			word_text += rhangman.shownName[i];
 			word_text += " ";
@@ -67,7 +72,7 @@ function hangman(words){
 		var guessed = "";
 		var userGuess = event.key;
 		userGuess = userGuess.toLowerCase();
-		if (rhangman.attemptsLeft === 0 && rhangman.chosenName.length !== 0){
+		if (rhangman.attemptsLeft === 0 && rhangman.correctLeft !== 0){
 			// insert message saying game is over.
 		return;
 		}
@@ -78,20 +83,20 @@ function hangman(words){
 			word_text += " ";
 		}
 		document.getElementById("line").innerHTML = word_text;
-		for (var i = 0; i < rhangman.chosenName.length; i++){
-			if (rhangman.chosenName[i] === " "){
-				word_text += " ";
-			}else{
-				word_text += "_"
-		}
-	}
-		if (rhangman.chosenName.length === 0){
+
+		if (rhangman.correctLeft === 0){
 			//insert image, play audio
-			rhangman.wins++;
-			document.getElementById("wins").innerHTML = rhangman.wins;
+			wins++;
+			document.getElementById("wins").innerHTML = wins;
 			rhangman.arrayOfWords.splice(this.nameIndex,1);
 			nrappers = rhangman.arrayOfWords;
 			rhangman = new hangman(nrappers);
+			word_text = "";
+			for (var i = 0; i < rhangman.shownName.length; i++){
+				word_text += rhangman.shownName[i];
+				word_text += " ";
+			}
+			document.getElementById("line").innerHTML = word_text;
 		}
 		document.getElementById("remaining").innerHTML = rhangman.attemptsLeft;
 
