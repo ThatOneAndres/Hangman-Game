@@ -64,6 +64,7 @@ function rapper(name, img, songpath, songname){
 	this.songpath = songpath;
 	this.songname = songname;
 }
+
 	// Rapper objects with name, imagepath, song path and song name
 	var em = new rapper("Eminem", "assets/images/Eminem.jpg","assets/audio/Eminem.mp3","The Real Slim Shady");
 	var pharrell = new rapper("Pharrell", "assets/images/Pharrell.jpg","assets/audio/Pharrell.mp3", "Happy");
