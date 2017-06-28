@@ -58,12 +58,12 @@ function hangman(words){
 		}
 	}
 }
-	function rapper(name, img, songpath, songname){
-		this.name = name;
-		this.image = img;
-		this.songpath = songpath;
-		this.songname = songname;
-	}
+function rapper(name, img, songpath, songname){
+	this.name = name;
+	this.image = img;
+	this.songpath = songpath;
+	this.songname = songname;
+}
 	// Rapper objects with name, imagepath, song path and song name
 	var em = new rapper("Eminem", "assets/images/Eminem.jpg","assets/audio/Eminem.mp3","The Real Slim Shady");
 	var pharrell = new rapper("Pharrell", "assets/images/Pharrell.jpg","assets/audio/Pharrell.mp3", "Happy");
@@ -88,36 +88,35 @@ function hangman(words){
 	var word_text = "";
 	var wins = 0;
 	for (var i = 0; i < rhangman.shownName.length; i++){
-			word_text += rhangman.shownName[i];
-			word_text += " ";
+		word_text += rhangman.shownName[i];
+		word_text += " ";
 	}
-	var correct_letters = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","$","-","@","#","!"];
+	var correct_letters = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","$","-","@","#","!","1","2","3","4","5","6","7","8","9","0"];
+
+	var audio;
 	
-	document.onload = function(){
-		console.log(word_text);
+	document.addEventListener("DOMContentLoaded", function(event){
 		document.getElementById("line").innerHTML = word_text;
-	}
+	});
 
 
 	document.onkeyup = function(event){
 		var guessed = "";
 		var userGuess = event.key;
-
-		//If player loses
 		userGuess = userGuess.toUpperCase();
-		if (rhangman.attemptsLeft === 0 && rhangman.correctLeft !== 0){
-			nrappers = rhangman.arrayOfWords;
-			rhangman = new hangman(nrappers);
-			word_text = "";
-			for (var i = 0; i < rhangman.shownName.length; i++){
-				word_text += rhangman.shownName[i];
-				word_text += " ";
-			}
-			document.getElementById("line").innerHTML = word_text;
-		}
+
+
 		if (correct_letters.includes(userGuess)){
 			rhangman.chooseLetter(userGuess);
 		}
+
+		//If player loses
+		if (rhangman.attemptsLeft === 0 && rhangman.correctLeft !== 0){
+			rhangman.arrayOfWords.splice(rhangman.nameIndex,1);
+			nrappers = rhangman.arrayOfWords;
+			rhangman = new hangman(nrappers);
+		}
+
 		word_text = "";
 		for (var i = 0; i < rhangman.shownName.length; i++){
 			word_text += rhangman.shownName[i];
@@ -128,16 +127,17 @@ function hangman(words){
 		// If player wins, will update HTML, play audio and start new game
 		if (rhangman.correctLeft === 0){
 			wins++;
+			console.log(typeof audio);
 			if (typeof audio !== "undefined"){
 				audio.pause();
 			}
-			var audio = new Audio(rhangman.chosenObject.songpath);
+			audio = new Audio(rhangman.chosenObject.songpath);
 			audio.play();
 			document.getElementById("wins").innerHTML = wins;
 			document.getElementById("image").src = rhangman.chosenObject.image;
 			document.getElementById("song-name").innerHTML = rhangman.chosenObject.songname + " by " + rhangman.chosenObject.name;
-			setTimeout(function(){audio.pause();}, 30000);
-			rhangman.arrayOfWords.splice(this.nameIndex,1);
+			setTimeout(function(){audio.pause();}, 60000);
+			rhangman.arrayOfWords.splice(rhangman.nameIndex,1);
 			nrappers = rhangman.arrayOfWords;
 			rhangman = new hangman(nrappers);
 			word_text = "";
@@ -159,6 +159,4 @@ function hangman(words){
 			}
 		}
 		document.getElementById("lettersguessed").innerHTML = guessed;
-		
-
 	}
