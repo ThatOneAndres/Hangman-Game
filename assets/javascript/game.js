@@ -1,9 +1,11 @@
-function hangman(words){
+function hangman(words,correctInputs){
 	// Makes every name in object array uppercase
 	for (var i = 0; i < words.length; i ++){
 		words[i].name = words[i].name.toUpperCase();
 	}
 	this.arrayOfWords = words;
+	// List of inputs to be accepted by hangman game
+	this.correctInputs = correctInputs;
 	// Correct and Wrong Guesses
 	this.allGuesses = [];
 	// Wrong guesses
@@ -40,20 +42,23 @@ function hangman(words){
 		return -1;
 	}
 	this.chooseLetter = function (guess){
-		if (!this.allGuesses.includes(guess)){
-			if (this.chosenName.includes(guess)){
-				while (this.findI(guess) != -1){
-					this.shownName[this.findI(guess)] = guess;
-					this.allGuesses.push(guess);
-					this.chosenName[this.findI(guess)] = null;
-					this.correctLeft--;
+		guess = guess.toUpperCase();
+		if (this.correctInputs.includes(guess)){
+			if (!this.allGuesses.includes(guess)){
+				if (this.chosenName.includes(guess)){
+					while (this.findI(guess) != -1){
+						this.shownName[this.findI(guess)] = guess;
+						this.allGuesses.push(guess);
+						this.chosenName[this.findI(guess)] = null;
+						this.correctLeft--;
 
+					}
 				}
-			}
-			else{
-				this.attemptsLeft--;
-				this.allGuesses.push(guess);
-				this.shownGuesses.push(guess);
+				else{
+					this.attemptsLeft--;
+					this.allGuesses.push(guess);
+					this.shownGuesses.push(guess);
+				}
 			}
 		}
 	}
@@ -91,12 +96,13 @@ function rapper(name, img, songpath, songname){
 
 	
 	var rappers = [em, pharrell, drake, nas, migos, future, snoop,kanye,kendrick,jay,joey,tech,chainz,cole];
-	var rhangman = new hangman(rappers);
+	var correct_inputs = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","$","-","@","#","!","1","2","3","4","5","6","7","8","9","0"];
+
+	var rhangman = new hangman(rappers,correct_inputs);
 	var nrappers;
 
 	var word_text = "";
 	var wins = 0;
-	var correct_letters = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","$","-","@","#","!","1","2","3","4","5","6","7","8","9","0"];
 
 	var audio;
 	
@@ -108,18 +114,16 @@ function rapper(name, img, songpath, songname){
 	document.onkeyup = function(event){
 		var guessed = "";
 		var userGuess = event.key;
-		userGuess = userGuess.toUpperCase();
 
 
-		if (correct_letters.includes(userGuess)){
-			rhangman.chooseLetter(userGuess);
-		}
+		rhangman.chooseLetter(userGuess);
+
 
 		//If player loses
 		if (rhangman.attemptsLeft === 0 && rhangman.correctLeft !== 0){
 			rhangman.arrayOfWords.splice(rhangman.nameIndex,1);
 			nrappers = rhangman.arrayOfWords;
-			rhangman = new hangman(nrappers);
+			rhangman = new hangman(nrappers,correct_inputs);
 		}
 
 		document.getElementById("line").innerHTML = rhangman.stringName();
@@ -138,7 +142,7 @@ function rapper(name, img, songpath, songname){
 			setTimeout(function(){audio.pause();}, 60000);
 			rhangman.arrayOfWords.splice(rhangman.nameIndex,1);
 			nrappers = rhangman.arrayOfWords;
-			rhangman = new hangman(nrappers);
+			rhangman = new hangman(nrappers,correct_inputs);
 			document.getElementById("line").innerHTML = rhangman.stringName();
 		}
 
