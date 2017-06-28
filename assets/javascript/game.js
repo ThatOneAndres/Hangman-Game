@@ -57,6 +57,14 @@ function hangman(words){
 			}
 		}
 	}
+	this.stringName = function(){
+		var word_text = "";
+		for (var i = 0; i < rhangman.shownName.length; i++){
+			word_text += rhangman.shownName[i];
+			word_text += " ";
+		}
+		return word_text;
+	}
 }
 function rapper(name, img, songpath, songname){
 	this.name = name;
@@ -88,16 +96,12 @@ function rapper(name, img, songpath, songname){
 
 	var word_text = "";
 	var wins = 0;
-	for (var i = 0; i < rhangman.shownName.length; i++){
-		word_text += rhangman.shownName[i];
-		word_text += " ";
-	}
 	var correct_letters = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","$","-","@","#","!","1","2","3","4","5","6","7","8","9","0"];
 
 	var audio;
 	
 	document.addEventListener("DOMContentLoaded", function(event){
-		document.getElementById("line").innerHTML = word_text;
+	document.getElementById("line").innerHTML = rhangman.stringName();
 	});
 
 
@@ -118,17 +122,11 @@ function rapper(name, img, songpath, songname){
 			rhangman = new hangman(nrappers);
 		}
 
-		word_text = "";
-		for (var i = 0; i < rhangman.shownName.length; i++){
-			word_text += rhangman.shownName[i];
-			word_text += " ";
-		}
-		document.getElementById("line").innerHTML = word_text;
+		document.getElementById("line").innerHTML = rhangman.stringName();
 
 		// If player wins, will update HTML, play audio and start new game
 		if (rhangman.correctLeft === 0){
 			wins++;
-			console.log(typeof audio);
 			if (typeof audio !== "undefined"){
 				audio.pause();
 			}
@@ -141,12 +139,7 @@ function rapper(name, img, songpath, songname){
 			rhangman.arrayOfWords.splice(rhangman.nameIndex,1);
 			nrappers = rhangman.arrayOfWords;
 			rhangman = new hangman(nrappers);
-			word_text = "";
-			for (var i = 0; i < rhangman.shownName.length; i++){
-				word_text += rhangman.shownName[i];
-				word_text += " ";
-			}
-			document.getElementById("line").innerHTML = word_text;
+			document.getElementById("line").innerHTML = rhangman.stringName();
 		}
 
 
