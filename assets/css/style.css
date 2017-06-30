@@ -3,11 +3,12 @@ html{
 }
 body{
 	height: 100%;
-	background-color: black;
+	/*background-color: black;*/
 	color: #fff;
-/*	background-image: url("../images/HipHop.jpeg");
-background-repeat: repeat;*/
-margin: 0;
+	background-image: url("../images/HipHop2.jpg");
+	background-repeat: repeat;
+	background-size: 100% 100%;
+	margin: 0;
 }
 @font-face {
 	font-family: "bubble";
@@ -34,6 +35,9 @@ margin: 0;
 #song-name{
 	font-family: 'Bowlby One', cursive;
 	font-size: 28px;
+}
+#content{
+	margin-top: 10px;
 }
 #center{
 	border-width: 5px;
