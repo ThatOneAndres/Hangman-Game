@@ -5,14 +5,31 @@ body{
 	height: 100%;
 	background-color: black;
 	color: #fff;
-	margin: 0;
+/*	background-image: url("../images/HipHop.jpeg");
+background-repeat: repeat;*/
+margin: 0;
+}
+@font-face {
+	font-family: "bubble";
+	src: url(Disko.ttf) format("truetype");
+	font-weight: bold;
+}
+@font-face {
+	font-family: "brick";
+	src: url("28_Days_Later.ttf") format("truetype");
+	font-weight: bold;
 }
 #main-header{
-	font-size: 65px;
+	font-family: "brick";
+	font-size: 90px;
 	height:55px;
+	color:red;
+	margin-bottom: 26px;
 }
 #sub-header{
+	font-family: "bubble";
 	font-size: 40px;
+	color: blue;
 }
 #song-name{
 	font-family: 'Bowlby One', cursive;
@@ -40,7 +57,7 @@ body{
 }
 @media only screen and (max-width: 991px) {
 	#hangman-loc{
-	border-left-style: none;
-	border-top-style: dashed;
+		border-left-style: none;
+		border-top-style: dashed;
 	}
 }
